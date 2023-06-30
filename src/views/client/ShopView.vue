@@ -2,7 +2,7 @@
 
 import { onMounted, ref ,reactive,toRaw, onBeforeMount, toRefs} from 'vue'
 import {  computed } from 'vue'
-import {getshophome} from '../../api/api' 
+import {getshophome,getshopcategory} from '../../api/api' 
 
 import {
   Check,
@@ -37,39 +37,74 @@ const   product1 = ref<product> ({
   },
   
 ]);  
-let ob1 = productlist
-const itemnum =   ref(0)
-const inputsearch = ref('')
- 
-onMounted(() => { 
-     
-    getshophome().then((res: any) => { 
-        //  console.log(res); 
+let ob1 = ref(productlist)
+// const category = reactive([{
+//   id:0,
+//   name:'',
+//   children:[
+//     {
+//       id:1,name:''
+//     }
+//   ]
+// }])
 
+const itemnum =   ref(0)
+
+const getInfo = reactive({
+  keyword:'',
+  categoryId:0,
+})
+let category = ref({})  
+ const load= () => {
+
+  
+  console.log(getInfo);  
+  getshophome(getInfo).then((res: any) => { 
+          console.log(res);  
         //  console.log(productlist)
         productlist =  res.data
+        console.log(productlist);  
         //JSON.parse( JSON.stringify(res.data))
-        //console.log(productlist.value[0].name)
-
-        ob1 = productlist 
+        //console.log(productlist.value[0].name) 
+        ob1.value = productlist  
         itemnum.value=productlist.length
-        ob1.push(productlist[0])
-        ob1.push(productlist[0])
-        ob1.push(productlist[0])
- 
-        
+        ob1.value .push(productlist[0])
+        ob1.value .push(productlist[0])
+        ob1.value .push(productlist[0])  
+        console.log(ob1.value)
+      })
+
+ }
+onMounted(() => { 
+     
+      load()
+      getshopcategory().then((res: any) => { 
+       // console.log(res) 
+       
+        category.value = res.data
+         // console.log(category)
+        // console.log(category[0].id)
+        // console.log(category[0].children[1].name)
       })
  })
  
  
 
- const enter = () =>{ 
-  console.log(inputsearch.value)
-
-
+const enter = () =>{ 
+  console.log(getInfo.keyword)  
+  load()
 }
-const search = (row:number,col:number) =>{ 
-  console.log(ob1[row*4+col].id) 
+
+const choose = (id:number ) =>{ 
+  console.log( id) 
+  getInfo.keyword = ''
+  getInfo.categoryId=id
+  load()
+}
+
+
+const todetail = (row:number,col:number) =>{ 
+  console.log(ob1.value [row*4+col].id) 
 }
 
 
@@ -78,19 +113,26 @@ const search = (row:number,col:number) =>{
 <template>
     <div class="sub-header">
       <div class="category">
-        <h1>分类</h1>
+        
+        <div class="maincategory" v-for="(item) in category " :key="item">
+            {{ item.name}} 
+            <el-link  @click="choose(subitem.id)" class="subcategory" v-for="(subitem,index) in item.children" :key="index">
+                {{ subitem.name }}
+            </el-link> 
+        </div>
       </div>
         
 
         <div  class="search">
           <el-input
-            v-model="inputsearch"
-            placeholder="Please input"
+            v-model="getInfo.keyword"
+            placeholder="搜索"
             class="input-with-select"
             @change="enter"
+            size="large"
           >
             <template #append>
-              <el-button  @click="enter" :icon="Search" />
+              <el-button  @click="enter"   >搜索</el-button>
             </template> 
           </el-input>
          </div>
@@ -107,13 +149,13 @@ const search = (row:number,col:number) =>{
         :span="4"
         :offset="col > 0 ? 1 : 3"
         > 
-        <el-card   @click="search(  row,col )"  v-show="row*4+col<=itemnum-1"    :body-style="{ padding: '0px' }">  
+        <el-card   @click="todetail(  row,col )"  v-show="row*4+col<=itemnum-1"    :body-style="{ padding: '0px' }">  
           <img    src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"  class="image" />
                 <div style="padding: 20px"> 
                       <span >{{  ob1[row*4+col].name }}</span> 
                       <div class="bottom"> 
-                          <div class="subtitle" >{{  ob1[row*4+col].subTitle }}</div> 
-                          <div class="price" >￥{{  ob1[row*4+col].price }}</div> 
+                          <div class="subtitle" >{{  ob1 [row*4+col].subTitle }}</div> 
+                          <div class="price" >￥{{  ob1 [row*4+col].price }}</div> 
                           <el-button type="warning" :icon="Search"    circle ></el-button>
                      </div>
                 </div> 
@@ -160,6 +202,8 @@ const search = (row:number,col:number) =>{
   display: flex;
   margin-top: 50px;
   margin-bottom: 50px;
+  margin-left: 10%;
+  margin-right: 20%;
 }
 .search{
   margin: auto;
@@ -171,5 +215,19 @@ const search = (row:number,col:number) =>{
   margin: auto;
   width: 20%;
   /* margin-bottom: 100px; */
+  background-color: #f2e2e0;
+ 
+}
+
+.maincategory{
+  display: inline-flexbox;
+  font-size: 18px;
+  height: 30px;
+}
+.subcategory{ 
+  
+  font-size: 15px;
+  margin-top: 3px;
+  margin-left: 20px;
 }
 </style>

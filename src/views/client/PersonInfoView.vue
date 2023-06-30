@@ -13,6 +13,9 @@ import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 import type { UploadFile } from 'element-plus'
 
  
+
+const router = useRouter()
+ 
 const upload = ref<UploadInstance>()
 
 const handlerror = ()=>{
@@ -26,11 +29,9 @@ const handleSuccess = ()=>{
 const loading= ref(false)
 const handleprogress = ()=>{
    loading.value=true
-}
+} 
 
-
-
-
+//超过一个图片时清除
 const handleExceed: UploadProps['onExceed'] = (files) => {
   upload.value!.clearFiles()
   const file = files[0] as UploadRawFile
@@ -45,9 +46,7 @@ const uploadbtn = () => {
   upload.value!.submit()
 }
 
- 
 
-const router = useRouter()
 interface clientformRule {
 
   name: string
@@ -132,8 +131,7 @@ const load = () => {
     clientform.identityNumber = res.data.identityNumber
     clientform.createTime = res.data.createTime
     clientform.phone = res.data.phone
-    avatatUrl.value = res.data.imageUrl
-   
+    avatatUrl.value = res.data.imageUrl 
   })
 }
 onMounted(() => {
@@ -203,10 +201,7 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
       type: 'warning',
     }
   )
-    .then(() => {
-
-
-
+    .then(() => {  
       if (clientPassword.password.length != 0 && clientPassword.password == clientPassword.newPassword) {
         ElMessageBox.alert("密码不能与旧密码相同", '提示', { confirmButtonText: 'OK', })
         return
