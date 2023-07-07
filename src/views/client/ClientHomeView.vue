@@ -83,7 +83,7 @@ const layout = () => {
     text: 'Loading',
     background: 'rgba(0, 0, 0, 0.7)',
   })
-  localStorage.clear()
+  localStorage.removeItem("client_token")
   setTimeout(() => {
     loading.close()
     router.push({

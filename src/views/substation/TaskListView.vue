@@ -91,6 +91,7 @@
               </el-popover>
   
               <!-- <el-button link type="primary" size="small" >详情</el-button> -->
+              <el-button type="success" style="margin-right: 16px" @click="get(scope.row)">收货</el-button>
               <el-button type="primary" style="margin-right: 16px" @click="edit(scope.row)">调度</el-button>
    
             </template>
@@ -118,7 +119,7 @@
   import { Search ,InfoFilled} from '@element-plus/icons-vue'
   import type { FormInstance, FormRules } from 'element-plus'
   import { ElMessage } from 'element-plus' 
-  import { substationTaskList,choosedeliveryman,getdeliveryman} from "../../api/api";
+  import { substationTaskList,choosedeliveryman,getdeliveryman,getproduct} from "../../api/api";
     
   
   const small = ref(false)
@@ -218,6 +219,22 @@
       centerDialogVisible.value=!centerDialogVisible.value
     } 
    
+    const get = (x:object ) => {
+     
+      console.log(JSON.parse(JSON.stringify(x)).id )
+      taskList.id= JSON.parse(JSON.stringify(x)).id
+      getproduct(taskList).then((res: any) => { 
+        console.log(res);  
+        if(res.status == 0) {
+          ElMessage.success('收获成功')
+         
+          loadpage()
+        }else{
+          ElMessage.error(res.message)  
+        } 
+      });  
+    } 
+
   
   
     const choseRow = (index: number) => {

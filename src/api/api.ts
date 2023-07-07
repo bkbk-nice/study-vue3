@@ -46,7 +46,7 @@ export function preCreateOrder(params:any) {
     method: 'post', 
     data:params,  
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     } 
   }) 
 }
@@ -57,7 +57,7 @@ export function createOrder(params:any) {
     method: 'post', 
     data:params,  
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     } 
   }) 
 }
@@ -68,7 +68,7 @@ export function searchOrder(params:any) {
     method: 'get', 
      params,  
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     } 
   }) 
 }
@@ -83,7 +83,7 @@ export function editClient(params:any) {
     method: 'post', 
     data:params,  
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     } 
   }) 
 }
@@ -94,7 +94,7 @@ export function updatePassword(params:any) {
     method: 'post', 
     data:params,  
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     } 
   }) 
 }
@@ -106,7 +106,7 @@ export function getClient( ) {
     method: 'get', 
     
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     } 
   }) 
 }
@@ -120,7 +120,7 @@ export function client_getAvator() {
 
     method: 'get',
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("client_token")
     }
 
   })
@@ -191,7 +191,7 @@ export function postCsclientaddClient(params: any) {
     data:params ,
      
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     }
 
   })
@@ -210,7 +210,7 @@ export function getCsclientlistPageByDynamics(params: any) {
     params,
     
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     }
 
   })
@@ -230,7 +230,7 @@ export function postCsclienteditClient(params: any) {
     data:params ,
      
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     }
 
   })
@@ -249,7 +249,7 @@ export function postCsclientdelClient(params: any) {
     params ,
      
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     } 
 
   })
@@ -267,7 +267,7 @@ export function postCsclientdelClient(params: any) {
     params,
     
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     }
 
   })
@@ -280,7 +280,7 @@ export function createAllocationList(params: any) {
     method: 'post',
     data:params ,     
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     }
   })
 }
@@ -291,7 +291,7 @@ export function getSubstation() {
     url: '/cs-service/dispatch/substationList',
     method: 'get',  
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("cs_token")
     } 
   }) 
 }
@@ -318,7 +318,7 @@ export function substationTaskList(params: any) {
     method: 'get',  
     params,
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("substation_token")
     } 
   }) 
 }
@@ -330,7 +330,19 @@ export function choosedeliveryman(params: any) {
     method: 'post',
     data:params ,     
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("substation_token")
+    }
+  })
+}
+
+//分站收货
+export function getproduct(params: any) {
+  return http.request({
+    url: '/substation-service/substation/getProduct',
+    method: 'post',
+    data:params ,     
+    headers: {
+      Authorization: localStorage.getItem("substation_token")
     }
   })
 }
@@ -341,7 +353,41 @@ export function getdeliveryman() {
     url: '/substation-service/substation/getDeliveryman',
     method: 'get',   
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("substation_token")
     } 
   }) 
+}
+
+
+
+//中心库房登录
+
+export function centerLogin(params: any) {
+  return http.request({
+    url: '/product-service/secure/login',
+    method: 'post',
+    data:params , 
+  })
+}
+//中心库房查看调度单
+export function allocationList(params: any) { 
+  return http.request({ 
+    url: '/product-service/center/listPageByDynamics',
+    method: 'get',  
+    params,
+    headers: {
+      Authorization: localStorage.getItem("center_token")
+    } 
+  }) 
+}
+//中心库房分发货物 
+export function allocationStart(params: any) {
+  return http.request({
+    url: '/product-service/center/allocationStart',
+    method: 'post',
+    data:params ,     
+    headers: {
+      Authorization: localStorage.getItem("center_token")
+    }
+  })
 }

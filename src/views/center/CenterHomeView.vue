@@ -5,7 +5,7 @@
         <div style="display: flex; ">
           <div style="font-size: 25px;flex:1; ">
             <img alt="logo" style="margin-top: 10px;margin-right: 10px;" src="/myweb.ico" width="35" height="35" />
-            <span>分站系统 </span>
+            <span>中心库房</span>
           </div>
   
           <div>
@@ -40,11 +40,11 @@
                 <template #title>
                   <el-icon>
                     <message />
-                  </el-icon><span>任务单管理</span>
+                  </el-icon><span>货物调度单管理</span>
                 </template>
                 <el-menu-item-group>
-                  <template #title><span>任务单</span></template>
-                  <el-menu-item index="/substation/tasklist"><span>任务单</span></el-menu-item>
+                  <template #title><span>货物调度单</span></template>
+                  <el-menu-item index="/center/allocationlist"><span>货物调度单</span></el-menu-item>
                   <!-- <el-menu-item index="1-2">商品2</el-menu-item> -->
                 </el-menu-item-group>
               </el-sub-menu>
@@ -85,10 +85,7 @@
             </div>
           </el-footer>
   
-        </el-main>
-  
-  
-  
+        </el-main> 
   
       </el-container>
   
@@ -129,7 +126,7 @@
       text: 'Loading',
       background: 'rgba(0, 0, 0, 0.7)',
     })
-    localStorage.removeItem("substation_token")
+    localStorage.removeItem("center_token")
     setTimeout(() => {
       loading.close()
       router.push({

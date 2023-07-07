@@ -145,6 +145,23 @@ const router = createRouter({
          
       ],
     },
+     //中心库房路由
+    {
+      path: '/center', 
+      name:'center', 
+      meta:{
+        title:"中心库房"
+      },
+      component:   () => import('../views/center/CenterHomeView.vue'),
+      children: [
+        {
+          path: 'allocationlist',
+          name: 'allocationlist', 
+          component: () => import('../views/center/AllocationList.vue')
+        }, 
+         
+      ],
+    },
   ],
 
    

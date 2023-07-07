@@ -99,7 +99,7 @@ const openFullScreen = () => {
       console.log(res); 
       loading.close();
       if(res.status==0){
-          localStorage.setItem("token",res.data.token)
+          localStorage.setItem("cs_token",res.data.token)
           router.push({
              name: 'store', 
          })
@@ -120,7 +120,7 @@ const openFullScreen = () => {
       console.log(res); 
       loading.close();
       if(res.status==0){
-          localStorage.setItem("token",res.data.token)
+          localStorage.setItem("client_token",res.data.token)
           router.push({
              path:"/client/shop"
          })
