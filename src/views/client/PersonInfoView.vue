@@ -246,6 +246,12 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
 <template>
   <div class="parent">
 
+    <el-breadcrumb  class="mynav" separator="/">
+      <el-breadcrumb-item :to="{ path: '/client/shop' }">商城</el-breadcrumb-item> 
+      <el-breadcrumb-item>个人信息</el-breadcrumb-item> 
+    </el-breadcrumb>
+
+
     <el-tabs v-model="activeName" class="demo-tabs">
       <el-tab-pane label="个人信息" name="first">个人信息
         <el-form ref="ruleFormRef" :model="clientform" :rules="rules" label-width="120px" status-icon>
@@ -341,7 +347,7 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
 
 .demo-tabs {
   width: 50%;
-  margin: auto;
+  margin-top:100px;
 
 }
 
@@ -352,5 +358,10 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
 .upload{
   /* width: 100px;
   height: 200px; */
+}
+.mynav{
+  margin-top: 50px;
+  margin-left: 150px;
+  font-size: 20px;
 }
 </style>

@@ -26,6 +26,52 @@ export function getshopcategory() {
   })
 
 }
+//获取具体一个商品的详细信息
+export function getDetail(params:any) {
+
+  return http.request({
+
+    url: '/product-service/product/getDetail',
+
+    method: 'get',
+   
+    params
+  })
+
+}
+//预创建订单
+export function preCreateOrder(params:any) { 
+  return http.request({ 
+    url: '/product-service/order/preCreateOrder', 
+    method: 'post', 
+    data:params,  
+    headers: {
+      Authorization: localStorage.getItem("token")
+    } 
+  }) 
+}
+//创建订单
+export function createOrder(params:any) { 
+  return http.request({ 
+    url: '/product-service/order/createOrder', 
+    method: 'post', 
+    data:params,  
+    headers: {
+      Authorization: localStorage.getItem("token")
+    } 
+  }) 
+}
+//分页查询订单信息
+export function searchOrder(params:any) { 
+  return http.request({ 
+    url: '/product-service/order/searchOrder', 
+    method: 'get', 
+     params,  
+    headers: {
+      Authorization: localStorage.getItem("token")
+    } 
+  }) 
+}
  
 
 
@@ -209,4 +255,93 @@ export function postCsclientdelClient(params: any) {
   })
 
 }
- 
+//客服查询订单动态
+ export function getOrderPageByDynamics(params: any) {
+
+  return http.request({
+
+    url: '/cs-service/order/listPageByDynamics',
+
+    method: 'get',
+
+    params,
+    
+    headers: {
+      Authorization: localStorage.getItem("token")
+    }
+
+  })
+
+}
+//客服调度订单
+export function createAllocationList(params: any) {
+  return http.request({
+    url: '/cs-service/dispatch/createAllocationList',
+    method: 'post',
+    data:params ,     
+    headers: {
+      Authorization: localStorage.getItem("token")
+    }
+  })
+}
+
+//客服查询所有分站信息
+export function getSubstation() { 
+  return http.request({ 
+    url: '/cs-service/dispatch/substationList',
+    method: 'get',  
+    headers: {
+      Authorization: localStorage.getItem("token")
+    } 
+  }) 
+}
+
+
+//分站登录
+export function substationLogin(params: any) {
+
+  return http.request({
+
+    url: '/substation-service/secure/login',
+
+    method: 'post',
+
+    data:params , 
+  })
+
+}
+
+//分站查询任务单
+export function substationTaskList(params: any) { 
+  return http.request({ 
+    url: '/substation-service/substation/listPageByDynamics',
+    method: 'get',  
+    params,
+    headers: {
+      Authorization: localStorage.getItem("token")
+    } 
+  }) 
+}
+
+//分站选择配送员
+export function choosedeliveryman(params: any) {
+  return http.request({
+    url: '/substation-service/substation/chooseDeliveryman',
+    method: 'post',
+    data:params ,     
+    headers: {
+      Authorization: localStorage.getItem("token")
+    }
+  })
+}
+
+//分站查询配送员
+export function getdeliveryman() { 
+  return http.request({ 
+    url: '/substation-service/substation/getDeliveryman',
+    method: 'get',   
+    headers: {
+      Authorization: localStorage.getItem("token")
+    } 
+  }) 
+}

@@ -47,6 +47,12 @@ const router = createRouter({
           name: 'signup',
           component:   () => import('../views/common/SignupView.vue'),
            
+        } ,
+        {
+          path: 'backstage',
+          name: 'backstage',
+          component:   () => import('../views/common/BackStage.vue'),
+           
         } 
       ],
     },
@@ -65,9 +71,9 @@ const router = createRouter({
       component:   () => import('../views/store/StoreHomeView.vue'),
       children: [
         {
-          path: 'product',
-          name: 'product', 
-          component: () => import('../views/store/ProductView.vue')
+          path: 'order',
+          name: 'store-order', 
+          component: () => import('../views/store/OrderView.vue')
         }, 
         {
           path: 'customer',
@@ -77,12 +83,12 @@ const router = createRouter({
       ],
     },
 
-    //store路由
+    //客户路由
     {
       path: '/client', 
       name:'client', 
       meta:{
-        title:"客户系统"
+        title:"商城"
       },
       component:   () => import('../views/client/ClientHomeView.vue'),
       children: [
@@ -100,26 +106,64 @@ const router = createRouter({
         {
           path: 'shop',
           name: 'shop', 
-          component: () => import('../views/client/ShopView.vue')
+          component: () => import('../views/client/ShopView.vue') ,
+          
         }, {
           path: 'order',
           name: 'order', 
           component: () => import('../views/client/OrderView.vue')
         }, 
+         {
+          path: 'product/:id',
+          name: 'product', 
+          component: () => import('../views/client/ProductDetail.vue'), 
+          props: true
+        }, 
+        {
+          path: 'success-order/:id',
+          name: 'successOrder', 
+          component: () => import('../views/client/SuccessOrder.vue'), 
+          props: true
+        }, 
       ],
     },
     
-  ]
+     //分站路由
+     {
+      path: '/substation', 
+      name:'substation', 
+      meta:{
+        title:"分站系统"
+      },
+      component:   () => import('../views/substation/SubstationHome.vue'),
+      children: [
+        {
+          path: 'tasklist',
+          name: 'tasklist', 
+          component: () => import('../views/substation/TaskListView.vue')
+        }, 
+         
+      ],
+    },
+  ],
+
+   
 })
 
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) { 
     document.title = to.meta.title
-  }
-  next()
+  } 
+  // chrome
+ // document.body.scrollTop = 0
+  // firefox
+  //document.documentElement.scrollTop = 0
+  // // safari
+  // window.pageYOffset = 0
+    next()
 })
-
-
-
+// router.afterEach(() => {
+//   window.scrollTo(0,0);
+// })
 export default router

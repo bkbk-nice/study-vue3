@@ -7,8 +7,7 @@ const show = ref(false)
 import { onMounted } from 'vue'
 
 onMounted(() => {
-  show.value = !show.value
- 
+  show.value = !show.value 
 })
 </script>
 

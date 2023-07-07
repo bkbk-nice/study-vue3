@@ -5,13 +5,26 @@ import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
+
+
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <WelcomeItem>
     <template #icon>
+      <CommunityIcon />
+    </template>
+    <RouterLink to="/common/backstage">后台系统</RouterLink>
+
+  </WelcomeItem>
+  <WelcomeItem>
+
+    
+    <template #icon>
       <DocumentationIcon />
     </template>
+
     <template #heading>Documentation</template>
 
     Vue’s

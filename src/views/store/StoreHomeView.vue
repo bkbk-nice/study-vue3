@@ -42,20 +42,14 @@
               <template #title>
                 <el-icon>
                   <message />
-                </el-icon><span>商品管理</span>
+                </el-icon><span>订单管理</span>
               </template>
               <el-menu-item-group>
-                <template #title><span>商品</span></template>
-                <el-menu-item index="/store/product"><span>商品</span></el-menu-item>
+                <template #title><span>订单</span></template>
+                <el-menu-item index="/store/order"><span>订单</span></el-menu-item>
                 <!-- <el-menu-item index="1-2">商品2</el-menu-item> -->
               </el-menu-item-group>
-              <!-- <el-menu-item-group title="Group 2">
-              <el-menu-item index="1-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="1-4">
-              <template #title>Option4</template>
-              <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu> -->
+               
             </el-sub-menu>
             <el-sub-menu index="">
               <template #title>
@@ -65,13 +59,7 @@
                 <template #title>Group 1</template>
                 <el-menu-item index="/store/customer"><span>客户</span></el-menu-item>
               </el-menu-item-group>
-              <!-- <el-menu-item-group title="Group 2">
-              <el-menu-item index="2-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="2-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>  -->
+               
             </el-sub-menu>
             <el-sub-menu index="3">
               <template #title>
@@ -79,18 +67,7 @@
                   <setting />
                 </el-icon><span>设置</span>
               </template>
-              <!-- <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="3-1">Option 1</el-menu-item>
-              <el-menu-item index="3-2">Option 2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="3-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="3-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>-->
+             
             </el-sub-menu>
           </el-menu>
         </el-scrollbar>
@@ -145,20 +122,7 @@ const openOrClose = () => {
   
   isCollapse.value=!isCollapse.value
   asidewidth.value = asidewidth.value=='200px'?'60px':'200px'
-}
-// const handleOpen = (key: string, keyPath: string[]) => {
-//   asidewidth.value = '200px'
-//   console.log(key, keyPath)
-// }
-// const handleClose = (key: string, keyPath: string[]) => {
-//   asidewidth.value = '10px'
-//   console.log(key, keyPath)
-// }
-
-//  function layout() {
-//   router.push({ name: 'common',})
-// }
-
+} 
 
 
 const layout = () => {

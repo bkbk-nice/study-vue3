@@ -12,6 +12,7 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
+import router from '@/router';
 
  interface product{
     id:number,
@@ -35,18 +36,9 @@ const   product1 = ref<product> ({
     subTitle:"",
     price:0.0, 
   },
-  
 ]);  
 let ob1 = ref(productlist)
-// const category = reactive([{
-//   id:0,
-//   name:'',
-//   children:[
-//     {
-//       id:1,name:''
-//     }
-//   ]
-// }])
+ 
 
 const itemnum =   ref(0)
 
@@ -55,15 +47,15 @@ const getInfo = reactive({
   categoryId:0,
 })
 let category = ref({})  
- const load= () => {
 
-  
-  console.log(getInfo);  
+
+const load= () => { 
+  //console.log(getInfo);  
   getshophome(getInfo).then((res: any) => { 
-          console.log(res);  
+         // console.log(res);  
         //  console.log(productlist)
         productlist =  res.data
-        console.log(productlist);  
+       // console.log(productlist);  
         //JSON.parse( JSON.stringify(res.data))
         //console.log(productlist.value[0].name) 
         ob1.value = productlist  
@@ -71,16 +63,14 @@ let category = ref({})
         ob1.value .push(productlist[0])
         ob1.value .push(productlist[0])
         ob1.value .push(productlist[0])  
-        console.log(ob1.value)
-      })
-
+        //console.log(ob1.value)
+      }) 
  }
 onMounted(() => { 
      
       load()
       getshopcategory().then((res: any) => { 
-       // console.log(res) 
-       
+       // console.log(res)  
         category.value = res.data
          // console.log(category)
         // console.log(category[0].id)
@@ -88,15 +78,20 @@ onMounted(() => {
       })
  })
  
- 
+ const home = () =>{ 
+  getInfo.keyword = ''
+  getInfo.categoryId=0
+  load()
+}
+
 
 const enter = () =>{ 
-  console.log(getInfo.keyword)  
+ // console.log(getInfo.keyword)  
   load()
 }
 
 const choose = (id:number ) =>{ 
-  console.log( id) 
+ // console.log( id) 
   getInfo.keyword = ''
   getInfo.categoryId=id
   load()
@@ -105,23 +100,32 @@ const choose = (id:number ) =>{
 
 const todetail = (row:number,col:number) =>{ 
   console.log(ob1.value [row*4+col].id) 
+  router.push({
+      name: 'product', 
+      params:{
+         id:ob1.value [row*4+col].id
+      } 
+  })
 }
 
 
 </script>
 
 <template>
+
+     
+
     <div class="sub-header">
+      <img alt="logo" @click="home" style="margin-left: 100px;margin-top:50px;" src="/myweb.ico" width="105" height="105" />
+     
       <div class="category">
-        
         <div class="maincategory" v-for="(item) in category " :key="item">
             {{ item.name}} 
             <el-link  @click="choose(subitem.id)" class="subcategory" v-for="(subitem,index) in item.children" :key="index">
                 {{ subitem.name }}
             </el-link> 
         </div>
-      </div>
-        
+      </div> 
 
         <div  class="search">
           <el-input
@@ -138,31 +142,42 @@ const todetail = (row:number,col:number) =>{
          </div>
     </div>
 
-    <el-row 
-         v-for="(o, row) in  Math.ceil(itemnum/4)"
-        :key="o"   
-        :gutter=0
-     > 
-        <el-col
-        v-for="(d, col) in 4"
-        :key="d"
-        :span="4"
-        :offset="col > 0 ? 1 : 3"
-        > 
-        <el-card   @click="todetail(  row,col )"  v-show="row*4+col<=itemnum-1"    :body-style="{ padding: '0px' }">  
-          <img    src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"  class="image" />
-                <div style="padding: 20px"> 
-                      <span >{{  ob1[row*4+col].name }}</span> 
-                      <div class="bottom"> 
-                          <div class="subtitle" >{{  ob1 [row*4+col].subTitle }}</div> 
-                          <div class="price" >￥{{  ob1 [row*4+col].price }}</div> 
-                          <el-button type="warning" :icon="Search"    circle ></el-button>
-                     </div>
-                </div> 
-            </el-card> 
-        </el-col>
-  </el-row>
 
+    <div v-if="itemnum>0">
+
+    
+        <el-row 
+            v-for="(o, row) in  Math.ceil(itemnum/4)"
+            :key="o"   
+            :gutter=0
+        > 
+            <el-col
+            v-for="(d, col) in 4"
+            :key="d"
+            :span="4"
+            :offset="col > 0 ? 1 : 3"
+            > 
+            <el-card  class="card"  @click="todetail(  row,col )"  v-show="row*4+col<=itemnum-1" :body-style="{ padding: '0px' }">  
+              <img    :src="ob1[row*4+col].mainImage"   class="image" />
+                    <div style="padding: 20px"> 
+                          <span >{{  ob1[row*4+col].name }}</span> 
+                          <div class="bottom"> 
+                              <div class="subtitle" >{{  ob1 [row*4+col].subTitle }}</div> 
+                              <div class="price" >￥{{  ob1 [row*4+col].price }}</div> 
+                              <el-button type="warning" :icon="Search"    circle ></el-button>
+                        </div>
+                    </div> 
+                </el-card> 
+            </el-col>
+      </el-row>
+    </div>
+   
+    <div v-else> 
+        <el-empty description="没有找到此商品" /> 
+    </div>
+   
+
+ 
 </template>
 
 <style scoped>
@@ -200,20 +215,38 @@ const todetail = (row:number,col:number) =>{
 }
 .sub-header{
   display: flex;
-  margin-top: 50px;
+   
   margin-bottom: 50px;
-  margin-left: 10%;
-  margin-right: 20%;
+  margin-left: 0,auto;
+
+  border: 1px solid var(--el-border-color); 
+  border-radius: 20px; 
+  background-image: linear-gradient(to right,rgb(65, 56, 56),rgb(99, 95, 95),rgb(47, 51, 54));
+ 
 }
 .search{
   margin: auto;
   width: 20%;
   /*  */
 }
+.card{
+  height:350px;
+}
+.image{
+  /* position:absolute; 
+  top:0; 
+  bottom:0; 
+  left:0; 
+  right:0;  */
+  width:100%; 
+  height: 250px; 
+}
 
 .category{
   margin: auto;
   width: 20%;
+  margin-top: 20px;
+  margin-bottom: 20px;
   /* margin-bottom: 100px; */
   background-color: #f2e2e0;
  
@@ -230,4 +263,5 @@ const todetail = (row:number,col:number) =>{
   margin-top: 3px;
   margin-left: 20px;
 }
+ 
 </style>

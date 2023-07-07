@@ -107,7 +107,7 @@ const layout = () => {
       <div style="display: flex; ">
         <div style="font-size: 25px;flex:1; ">
           <img alt="logo" @click="jumpto_shop" style="margin-top: 10px;margin-right: 10px;" src="/myweb.ico" width="35" height="35" />
-          <span>客户界面 </span>
+          <span>商城 </span>
         </div>
 
         <div>
@@ -132,12 +132,10 @@ const layout = () => {
 
     </el-header>
 
-
+    <!-- :key="$route.fullPath" -->
     <el-main>
-        <RouterView>
-
-        </RouterView>
-        
+        <RouterView > 
+        </RouterView> 
     </el-main>
    
 

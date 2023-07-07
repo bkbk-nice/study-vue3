@@ -108,7 +108,7 @@
 
 
     <el-button type="primary" class="add" @click="addbtn">新增</el-button>
-    <el-scrollbar s >
+    <el-scrollbar >
      <!-- <v-touch> -->
         <el-table :data="tableData" class="table" border highlight-current-row    stripe>
         <el-table-column type="selection" width="55" />
@@ -129,9 +129,7 @@
         <el-table-column prop="phone" label="phone" width="160"   />
         <el-table-column prop="address" label="address" width="160"   />
         <el-table-column prop="email" label="eamil"  width="160"  />
-        <!-- <el-table-column prop="createTime" label="createtime" />
-        <el-table-column prop="updateTime" label="updatetime" /> -->
-
+         
         <!-- fixed="right" -->
         <el-table-column  label="Operations" width="300">
           <template #default="scope">
@@ -144,6 +142,7 @@
                 <el-table-column prop="name" label="name" width="80" />
                 <el-table-column width="350" property="createTime" label="createTime" />
                 <el-table-column width="300" property="updateTime" label="updateTime" />
+                
               </el-table>
             </el-popover>
 
@@ -350,18 +349,18 @@ const condition = reactive({
   pageNumber: 1,
   pageSize: 5,
 })
-  const loadpage = () => { 
-    getCsclientlistPageByDynamics(condition).then((res: any) => { 
-      console.log(res);
-      tableData.value = res.data.list;
-      total.value = res.data.total
-    });  
-  } 
 
 
-  onMounted(() => { 
-    loadpage();
-  })
+const loadpage = () => { 
+  getCsclientlistPageByDynamics(condition).then((res: any) => { 
+    console.log(res);
+    tableData.value = res.data.list;
+    total.value = res.data.total
+  });  
+}  
+onMounted(() => { 
+  loadpage();
+})
 
    
   
@@ -431,7 +430,7 @@ const condition = reactive({
   box-shadow: 0px 0px 15px 5px #888888;
   width: 80%;
   margin-left: 100px; 
-   
+  border-radius: 20px; 
   margin-bottom: 20px; 
   margin-top: 20px;
 }
@@ -441,7 +440,7 @@ const condition = reactive({
    margin-left:100px;
 }
 .demo-pagination-block {
-
+  border-radius: 20px; 
   margin-top: 10px;
   margin-left: 100px;
   width: 50%;
@@ -454,7 +453,8 @@ const condition = reactive({
 .item1 { 
   box-shadow: 0px 0px 15px 5px #888888; 
   grid-row: 1 / 1;
-  width: 300px;  
+  width: 300px;   
+  border-radius: 50px; 
 }
 
 .item2 {
@@ -491,6 +491,7 @@ const condition = reactive({
 .item1 { 
   box-shadow: 0px 0px 15px 5px #888888;  
   width: 150px;  
+  border-radius: 20px; 
   
 }
 
