@@ -173,9 +173,9 @@ const edit = (x: object) => {
           ElMessage.success('分发成功')
           centerDialogVisible.value=!centerDialogVisible.value
           loadpage()
-        }else{
-          ElMessage.error(res.message)  
-        } 
+      }else{
+        ElMessage.error(res.message)  
+      } 
   });
 
 }

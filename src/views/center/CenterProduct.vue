@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getDetail ,inventory} from '../../api/api'
+import { getDetail ,inventory,addProductNum} from '../../api/api'
 
 import { onMounted, ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -46,7 +46,38 @@ onMounted(() => {
 })
 
 const addproductnum = () => {
-    console.log(form.id, form.num)
+    // console.log(form.id, form.num) 
+    ElMessageBox.confirm(
+    '确认补货吗',
+    'Warning',
+    {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    .then(() => {  
+        let  send = {
+            productId:props.id,
+            num:form.num
+        }
+        addProductNum(send).then((res: any) => {
+            console.log(res)
+            if(res.status == 0) {
+            ElMessage.success('补货完成') 
+            }else{
+            ElMessage.error(res.message)  
+            }  
+            let  send = {
+            productId:props.id
+            }
+            inventory(send).then((res: any) => {
+                console.log(res)
+                inventorynum.value = res.data.quantity
+            }) 
+        })  
+    })
+    
 }
 
 

@@ -177,10 +177,7 @@ const sureGet = () =>{
               <div class="info-item">
                 总价:{{ orderlist[i].price*orderlist[i].num  }}
                  
-              </div> 
-
-             
-              
+              </div>  
                
 
               <div class="info-item">

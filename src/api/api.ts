@@ -1,5 +1,18 @@
 import http from '../utils/http'
 
+//新建商品
+export function newProduct(params:any) { 
+  return http.request({ 
+    url: '/product-service/center/newProduct', 
+    method: 'post', 
+    data:params,  
+    headers: {
+      'Authorization': localStorage.getItem("center_token"),
+      'Content-Type': "multipart/form-data" ,
+    }  
+  }) 
+}
+
 
 //商城首页动态获取商品信息
 export function getshophome(params:any) {
@@ -446,6 +459,32 @@ export function inventory(params:any) {
     }
   })
 }
+
+//中心库房补货
+export function addProductNum(params:any) {
+
+  return http.request({
+
+    url: '/product-service/center/addProductNum',
+    method: 'get',    
+    params,
+    headers: {
+      Authorization: localStorage.getItem("center_token")
+    }
+  })
+}
+//中心库房财务查询
+export function substationTaskListForCenter(params: any) { 
+  return http.request({ 
+    url: '/product-service/center/substationTaskListForCenter',
+    method: 'get',  
+    params,
+    headers: {
+      Authorization: localStorage.getItem("center_token")
+    } 
+  }) 
+}
+
 
 
 
