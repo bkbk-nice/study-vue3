@@ -11,20 +11,32 @@
         <div>
       
     </div>
-        <div style="text-align: right; margin-top: 10px; font-size: 20px" class="toolbar"  >
+        <div style="text-align: right; margin-top: 10px; font-size: 20px" class="toolbar"  > 
+          <div v-if="cnt>0" >
+              <el-badge :value="cnt" style="margin-right: 50px;">
+              <el-button @click="gotoOrder">新订单</el-button>
+            </el-badge>
+          </div>
+          <div v-else  >
+              <el-badge :value="cnt" type="primary" style="margin-right: 50px;">
+                <el-button  >新订单</el-button>
+             </el-badge>
+          </div>
+         
+           
+          <!-- <h1>{{ ssedata.text}}</h1> -->
           <el-dropdown>
             <el-avatar
         src="https://s2.loli.net/2023/06/25/myGOcEXjvRp7hsI.png"
       />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
+                <el-dropdown-item>View</el-dropdown-item> 
                 <el-dropdown-item @click="layout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <span>dev</span>
+          <span>客服</span>
         </div>
       </div>
 
@@ -110,6 +122,9 @@ import { RouterView } from 'vue-router'
 import { ElLoading } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import {   reactive } from 'vue' 
+
+import {logout} from '../../api/api'
 const router = useRouter()
 const route = useRoute()
  
@@ -118,11 +133,66 @@ const asidewidth = ref('200px')
 const isCollapse = ref(false)
  
 
+const ssedata = reactive({text:''})
+ 
+ 
+const cnt = ref(0)
+
+
 const openOrClose = () => {
   
   isCollapse.value=!isCollapse.value
   asidewidth.value = asidewidth.value=='200px'?'60px':'200px'
 } 
+
+
+onMounted(() => { 
+  createEventSource();
+   
+})
+let source = null;
+const createEventSource = () => {
+ 
+    if (window.EventSource) {
+        // 建立连接
+        let token = localStorage.getItem("cs_token")
+        source = new EventSource('http://localhost:9000/cs-service/sse/subscribe?token='+token,  
+       ); 
+    
+        source.addEventListener('open', function (e) {
+            console.log("建立连接");
+        }, false);
+       
+        source.addEventListener('message', function (e) {
+            console.log(e.data);
+            ssedata.text = e.data
+            cnt.value++
+        });
+
+    
+        source.addEventListener('finish', function (e) { 
+            console.log(e.data);
+        });
+
+    } else {
+        console.log("你的浏览器不支持SSE");
+    } 
+};
+window.onbeforeunload = function() {
+     closeSse();
+ };
+
+// 关闭Sse连接
+function closeSse() {
+    source.close();
+    const httpRequest = new XMLHttpRequest();
+    let token = localStorage.getItem("cs_token")
+    httpRequest.open('GET', 'http://localhost:9000/cs-service/sse/over?token=' +token  );
+    httpRequest.send();
+    console.log("close");
+} 
+
+ 
 
 
 const layout = () => {
@@ -131,16 +201,39 @@ const layout = () => {
     text: 'Loading',
     background: 'rgba(0, 0, 0, 0.7)',
   })
+  
+  closeSse()
   localStorage.removeItem("cs_token")
-  setTimeout(() => {
     loading.close()
     router.push({
       name: 'about',
-    })
-  }, 2000)
-
+    }) 
+   
 }
 
+
+const gotoOrder = () => { 
+  
+  cnt.value=0
+
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  router.push({
+      path: '/store',
+    }) 
+  setTimeout(() => {
+    loading.close()
+    router.push({
+      path: '/store/order',
+    }) 
+  }, 300) 
+
+ 
+   
+}
 
 
 </script>

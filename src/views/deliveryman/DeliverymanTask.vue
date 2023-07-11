@@ -1,40 +1,8 @@
 <template>
   <div>
-    <h1>task界面</h1>
+    <h1>任务单</h1>
     <el-scrollbar>
-
-
-      <el-dialog v-model="centerDialogVisible" title="选择配送员" width="45%" align-center>
-        <el-form ref="ruleFormRef" :model="taskList" label-width="120px" status-icon>
-          <el-form-item label="任务单号" prop="id">
-            <el-input v-model="taskList.id" disabled />
-          </el-form-item>
-
-          <el-form-item label="配送员编号" prop="deliverymanId">
-            <el-input v-model="taskList.deliverymanId" disabled />
-          </el-form-item>
-
-
-          <el-form-item label="选择配送员">
-            <el-select v-model="taskList.deliverymanId" filterable placeholder="Select">
-              <el-option v-for="item in deliverymans" :key="item.id" :label="item.name" :value="item.id" />
-            </el-select>
-          </el-form-item>
-
-
-
-
-          <el-form-item>
-            <el-button type="primary" @click="submitForm()">
-              确认
-            </el-button>
-            <!-- <el-button @click="resetForm(ruleFormRef)">重置</el-button> -->
-            <el-button type="danger" @click="centerDialogVisible = false">返回</el-button>
-          </el-form-item>
-        </el-form>
-
-      </el-dialog>
-
+ 
 
       <el-table :data="taskData" class="table" border :row-class-name="tableRowClassName">
         <el-table-column type="selection" width="55" />
@@ -48,7 +16,9 @@
         <el-table-column prop="id" label="任务单号" width="80" />
 
         <el-table-column prop="substationId" label="分站编号" width="50" />
-        <el-table-column prop="substationName" label="分站名" width="80" />
+        <el-table-column prop="substationName" label="分站名" width="100" />
+        
+
 
         <el-table-column prop="orderId" label="订单号" width="90" />
         <el-table-column prop="status" label="状态" width="100">
@@ -61,14 +31,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="allocationId" label="调度单号" width="90" />
-        <el-table-column prop="deliverymanName" label="配送员" width="90" />
-        <!-- fixed="right" -->
-
-
-        <el-table-column prop="clientPhone" label="客户手机号" width="90" />
+        <el-table-column prop="clientName" label="客户名" width="90" />
         <el-table-column prop="address" label="地址" width="90" />
-
-        <el-table-column prop="money" label="收款" width="90" />
+        <el-table-column prop="clientPhone" label="客户手机号" width="90" />
+        <el-table-column prop="price" label="总价" width="90" />
+         
+        <!-- fixed="right" -->
 
         <el-table-column label="操作" width="300">
           <template #default="scope">
@@ -78,8 +46,6 @@
                 <el-button style="margin-right: 16px" @click="choseRow(scope.row.id)">详情</el-button>
               </template>
               <el-table :data="filter">
-                <el-table-column prop="price" label="总价" width="90" />
-                <el-table-column prop="clientName" label="客户名" width="90" />
                 <el-table-column prop="deliverymanName" label="配送员" width="90" />
                 <el-table-column prop="deliverymanId" label="配送员id" width="90" />
                 <el-table-column prop="deliverymanPhone" label="配送员手机号" width="90" />
@@ -90,10 +56,8 @@
             </el-popover>
 
             <!-- <el-button link type="primary" size="small" >详情</el-button> -->
-            <el-button v-if="scope.row.status == 0" type="success" style="margin-right: 16px"
-              @click="get(scope.row)">收货</el-button>
-            <el-button v-if="scope.row.status == 1" type="primary" style="margin-right: 16px"
-              @click="edit(scope.row)">调度</el-button>
+            <el-button v-if="scope.row.status==2" type="success" style="margin-right: 16px" @click="get(scope.row)">签收</el-button>
+            <!-- <el-button type="primary" style="margin-right: 16px" @click="edit(scope.row)">调度</el-button> -->
 
           </template>
         </el-table-column>
@@ -120,7 +84,7 @@ import { ref, reactive } from 'vue'
 import { Search, InfoFilled } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { substationTaskList, choosedeliveryman, getdeliveryman, getproduct } from "../../api/api";
+import {  deliverymanTaskList,suremake } from "../../api/api";
 
 
 const small = ref(false)
@@ -146,16 +110,13 @@ const item = {
   createTime: '',
   updateTime: '',
   clientName: '',
-  clientPhone: '',
-  address: '',
-  price: 0,
-  money: 0,
+  clientPhone:'',
+  address:'',
+  price:0,
 }
 const taskData = ref(Array.from({ length: 1 }).fill(item))
 
-const deliverymans = ref([{
-  id: 0, name: "a"
-}])
+ 
 const taskList = reactive({
   id: 0,
   deliverymanId: 0,
@@ -166,11 +127,7 @@ const pageSize = ref(5)
 const total = ref(5)
 
 onMounted(() => {
-  loadpage();
-  getdeliveryman().then((res: any) => {
-    console.log(res);
-    deliverymans.value = res.data;
-  });
+  loadpage(); 
 })
 
 
@@ -182,31 +139,15 @@ const tableRowClassName = ({
   rowIndex: number
 }) => {
 
-  if (row.status == 0 || row.status == 1) {
+  if (row.status == 0 || row.status == 1 ||row.status == 2 ) {
     return 'warning-row'
-  } else if (row.status == 2 || row.status == 3 || row.status == 4) {
+  } else if ( row.status == 3 || row.status == 4) {
     return 'success-row'
   }
   return ''
 }
 
-const submitForm = () => {
-  if (taskList.deliverymanId == 0) {
-    ElMessage.error("请输入完整")
-    return
-  }
-  choosedeliveryman(taskList).then((res: any) => {
-    console.log(res);
-    if (res.status == 0) {
-      ElMessage.success('选择成功')
-      centerDialogVisible.value = !centerDialogVisible.value
-      loadpage()
-    } else {
-      ElMessage.error(res.message)
-    }
-  });
-}
-
+ 
 
 const condition = reactive({
   keyword: "",
@@ -216,7 +157,7 @@ const condition = reactive({
 
 
 const loadpage = () => {
-  substationTaskList(condition).then((res: any) => {
+  deliverymanTaskList(condition).then((res: any) => {
     console.log(res);
     taskData.value = res.data.list;
     total.value = res.data.total
@@ -250,11 +191,10 @@ const get = (x: object) => {
 
   console.log(JSON.parse(JSON.stringify(x)).id)
   taskList.id = JSON.parse(JSON.stringify(x)).id
-  getproduct(taskList).then((res: any) => {
+  suremake(taskList).then((res: any) => {
     console.log(res);
     if (res.status == 0) {
-      ElMessage.success('收获成功')
-
+      ElMessage.success('签收成功')
       loadpage()
     } else {
       ElMessage.error(res.message)

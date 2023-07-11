@@ -72,6 +72,29 @@ export function searchOrder(params:any) {
     } 
   }) 
 }
+//客户获取订单详情
+export function getOrderDetail(params:any) { 
+  return http.request({ 
+    url: '/product-service/order/getOrderDetail', 
+    method: 'get', 
+    params,  
+    headers: {
+      Authorization: localStorage.getItem("client_token")
+    } 
+  }) 
+}
+
+//客户确认收货
+export function makesureget(params:any) { 
+  return http.request({ 
+    url: '/product-service/order/makeSureGet', 
+    method: 'post', 
+    data:params,  
+    headers: {
+      Authorization: localStorage.getItem("client_token")
+    } 
+  }) 
+}
  
 
 
@@ -178,6 +201,8 @@ export function login_cs(params:any) {
   })
 
 }
+//客服退出登录(souce.close())
+ 
 //客服新建客户
 export function postCsclientaddClient(params: any) {
 
@@ -388,6 +413,77 @@ export function allocationStart(params: any) {
     data:params ,     
     headers: {
       Authorization: localStorage.getItem("center_token")
+    }
+  })
+}
+//中心库房查询商品
+export function getshophomeforcenter(params:any) {
+
+  return http.request({
+
+    url: '/product-service/product/homeForCenter',
+
+    method: 'get',
+    
+    params,
+
+    headers: {
+      Authorization: localStorage.getItem("center_token")
+    }
+  })
+}
+
+//中心库房查询库存
+export function inventory(params:any) {
+
+  return http.request({
+
+    url: '/product-service/center/inventory',
+    method: 'get',    
+    params,
+    headers: {
+      Authorization: localStorage.getItem("center_token")
+    }
+  })
+}
+
+
+
+
+//分站登录
+export function deliverymanLogin(params: any) {
+
+  return http.request({
+
+    url: '/deliveryman-service/secure/login',
+
+    method: 'post',
+
+    data:params , 
+  })
+
+}
+
+//分站查询任务单
+export function deliverymanTaskList(params: any) { 
+  return http.request({ 
+    url: '/deliveryman-service/deliveryman/listPageByDynamics',
+    method: 'get',  
+    params,
+    headers: {
+      Authorization: localStorage.getItem("deliveryman_token")
+    } 
+  }) 
+}
+
+//配送员签收
+export function suremake(params: any) {
+  return http.request({
+    url: '/deliveryman-service/deliveryman/sureMake',
+    method: 'post',
+    data:params ,     
+    headers: {
+      Authorization: localStorage.getItem("deliveryman_token")
     }
   })
 }

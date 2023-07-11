@@ -14,6 +14,11 @@ const back = () =>{
       } 
     })
 }
+const order = () =>{ 
+  router.push({
+      name: 'order',
+    })
+}
 
 </script>
 
@@ -26,6 +31,7 @@ const back = () =>{
       >
         <template #extra>
           <el-button @click="back" type="primary">返回</el-button>
+          <el-button @click="order" type="success">查看订单</el-button>
         </template>
       </el-result>
 </div>

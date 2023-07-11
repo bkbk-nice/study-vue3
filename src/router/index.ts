@@ -145,6 +145,23 @@ const router = createRouter({
          
       ],
     },
+    //配送员路由
+    {
+      path: '/deliveryman', 
+      name:'deliveryman', 
+      meta:{
+        title:"配送员系统"
+      },
+      component:   () => import('../views/deliveryman/DeliverymanHome.vue'),
+      children: [
+        {
+          path: 'deliveryman_task',
+          name: 'deliveryman_task', 
+          component: () => import('../views/deliveryman/DeliverymanTask.vue')
+        }, 
+         
+      ],
+    },
      //中心库房路由
     {
       path: '/center', 
@@ -158,6 +175,27 @@ const router = createRouter({
           path: 'allocationlist',
           name: 'allocationlist', 
           component: () => import('../views/center/AllocationList.vue')
+        }, 
+        {
+          path: 'addproduct',
+          name: 'addproduct', 
+          component: () => import('../views/center/AddProduct.vue')
+        }, 
+        {
+          path: 'financial',
+          name: 'financial', 
+          component: () => import('../views/center/FinancialStatistics.vue')
+        }, 
+        {
+          path: 'CenterShop',
+          name: 'CenterShop', 
+          component: () => import('../views/center/CenterShop.vue')
+        }, 
+        {
+          path: 'CenterProduct/:id',
+          name: 'CenterProduct', 
+          component: () => import('../views/center/CenterProduct.vue'),
+          props: true
         }, 
          
       ],

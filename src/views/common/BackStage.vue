@@ -3,7 +3,7 @@
 import { reactive } from 'vue'
 import { ElLoading } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { substationLogin,centerLogin } from "../../api/api"
+import { substationLogin,centerLogin ,deliverymanLogin} from "../../api/api"
  import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { formToJSON } from 'axios';
@@ -77,6 +77,27 @@ const openFullScreen = () => {
                 localStorage.setItem("center_token", res.data.token)
                 router.push({
                     name: 'center',
+                })
+                ElMessageBox.alert(res.message, '提示', {
+                    confirmButtonText: 'OK',
+                })
+            } else {
+                ElMessageBox.alert(res.message, '提示', {
+                    confirmButtonText: 'OK',
+                })
+            }
+        }).catch(() => {
+            loading.close();
+            ElMessageBox.alert("服务器异常", '提示', { confirmButtonText: 'OK', })
+        });
+    } else if (loginselectvalue.value == "deliveryman") {
+        deliverymanLogin(form).then((res: any) => {
+            console.log(res);
+            loading.close();
+            if (res.status == 0) {
+                localStorage.setItem("deliveryman_token", res.data.token)
+                router.push({
+                    name: 'deliveryman',
                 })
                 ElMessageBox.alert(res.message, '提示', {
                     confirmButtonText: 'OK',

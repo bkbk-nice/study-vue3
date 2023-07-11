@@ -5,7 +5,7 @@
         <div style="display: flex; ">
           <div style="font-size: 25px;flex:1; ">
             <img alt="logo" style="margin-top: 10px;margin-right: 10px;" src="/myweb.ico" width="35" height="35" />
-            <span>中心库房</span>
+            <span>配送员系统 </span>
           </div>
   
           <div>
@@ -40,37 +40,31 @@
                 <template #title>
                   <el-icon>
                     <message />
-                  </el-icon><span>货物调度单管理</span>
+                  </el-icon><span>任务单</span>
                 </template>
                 <el-menu-item-group>
-                 
-                  <el-menu-item index="/center/allocationlist"><span>货物调度单</span></el-menu-item>
+                  <template #title><span>任务单</span></template>
+                  <el-menu-item index="/deliveryman/deliveryman_task"><span>任务单</span></el-menu-item>
                   <!-- <el-menu-item index="1-2">商品2</el-menu-item> -->
                 </el-menu-item-group>
               </el-sub-menu>
-              
-              <el-sub-menu index="2">
+              <!--
+              <el-sub-menu index="">
                 <template #title>
-                  <el-icon><icon-menu /></el-icon><span>商城管理</span>
+                  <el-icon><icon-menu /></el-icon><span>客户管理</span>
                 </template>
                 <el-menu-item-group>
-                  
-                  <el-menu-item index="/center/CenterShop"><span>商城</span></el-menu-item>
-                  <el-menu-item index="/center/addproduct"><span>新增商品</span></el-menu-item>
-                </el-menu-item-group>                 
-              </el-sub-menu>  
-
+                  <template #title>Group 1</template>
+                  <el-menu-item index="/store/customer"><span>客户</span></el-menu-item>
+                </el-menu-item-group>
+                 
+              </el-sub-menu> -->
               <el-sub-menu index="3">
                 <template #title>
                   <el-icon>
-                    <message />
-                  </el-icon><span>财务</span>
+                    <setting />
+                  </el-icon><span>设置</span>
                 </template>
-                <el-menu-item-group>
-                   
-                  <el-menu-item index="/center/financial"><span>财务</span></el-menu-item>
-                  <!-- <el-menu-item index="1-2">商品2</el-menu-item> -->
-                </el-menu-item-group>
                
               </el-sub-menu>
             </el-menu>
@@ -91,14 +85,20 @@
             </div>
           </el-footer>
   
-        </el-main> 
+        </el-main>
+  
+  
+  
   
       </el-container>
   
   
     </el-container>
   </template>
-   
+  
+  
+  
+  
   
   
   <script lang="ts" setup>
@@ -129,7 +129,7 @@
       text: 'Loading',
       background: 'rgba(0, 0, 0, 0.7)',
     })
-    localStorage.removeItem("center_token")
+    localStorage.removeItem("deliveryman_token")
     setTimeout(() => {
       loading.close()
       router.push({
