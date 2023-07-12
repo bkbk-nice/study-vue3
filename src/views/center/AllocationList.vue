@@ -48,14 +48,14 @@
               </el-table>
             </el-popover>
 
-            <!-- <el-button link type="primary" size="small" >详情</el-button> -->
+            
             <el-button  v-if="scope.row.status == 0" type="primary" style="margin-right: 16px" @click="edit(scope.row)">分发</el-button>
 
           </template>
         </el-table-column>
       </el-table>
 
-      <!-- </v-touch> -->
+    
       <div class="demo-pagination-block">
         <el-input v-model="condition.keyword" placeholder="Type to search name" size="large" class="item1"> <template
             #append> <el-button :icon="Search" @click="Searchhandel" circle /> </template> </el-input>

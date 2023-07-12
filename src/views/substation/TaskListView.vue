@@ -39,11 +39,6 @@
       <el-table :data="taskData" class="table" border :row-class-name="tableRowClassName">
         <el-table-column type="selection" width="55" />
 
-        <!-- <el-table-column    label="图片"  width="55"> 
-            <template #default="scope">
-               <img :src="scope.row.mainImage"  style="height: 50px; width: 50px;"/>
-            </template>
-            </el-table-column> -->
 
         <el-table-column prop="id" label="任务单号" width="80" />
 
@@ -62,7 +57,6 @@
         </el-table-column>
         <el-table-column prop="allocationId" label="调度单号" width="90" />
         <el-table-column prop="deliverymanName" label="配送员" width="90" />
-        <!-- fixed="right" -->
 
 
         <el-table-column prop="clientPhone" label="客户手机号" width="90" />
@@ -89,7 +83,7 @@
               </el-table>
             </el-popover>
 
-            <!-- <el-button link type="primary" size="small" >详情</el-button> -->
+
             <el-button v-if="scope.row.status == 0" type="success" style="margin-right: 16px"
               @click="get(scope.row)">收货</el-button>
             <el-button v-if="scope.row.status == 1" type="primary" style="margin-right: 16px"
@@ -99,7 +93,7 @@
         </el-table-column>
       </el-table>
 
-      <!-- </v-touch> -->
+
       <div class="demo-pagination-block">
         <el-input v-model="condition.keyword" placeholder="Type to search name" size="large" class="item1"> <template
             #append> <el-button :icon="Search" @click="Searchhandel" circle /> </template> </el-input>
@@ -235,12 +229,7 @@ const filter = computed(() =>
 
 
 const edit = (x: object) => {
-  // ruleForm.id=JSON.parse(JSON.stringify(x)).id
-  // ruleForm.name=JSON.parse(JSON.stringify(x)).name
-  // ruleForm.address=JSON.parse(JSON.stringify(x)).address
-  // ruleForm.email=JSON.parse(JSON.stringify(x)).email
-  // ruleForm.identityNumber=JSON.parse(JSON.stringify(x)).identityNumber
-  // ruleForm.phone=JSON.parse(JSON.stringify(x)).phone
+ 
   console.log(JSON.parse(JSON.stringify(x)).id)
   taskList.id = JSON.parse(JSON.stringify(x)).id
   centerDialogVisible.value = !centerDialogVisible.value
@@ -253,7 +242,7 @@ const get = (x: object) => {
   getproduct(taskList).then((res: any) => {
     console.log(res);
     if (res.status == 0) {
-      ElMessage.success('收获成功')
+      ElMessage.success('收货成功')
 
       loadpage()
     } else {

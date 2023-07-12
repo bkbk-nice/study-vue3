@@ -155,13 +155,10 @@ const todetail = (row: number, col: number) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* width: 200px; */
+  
 }
 
-/* .bottom{
-  border: 1px solid red;
-  width: 60px;
-} */
+ 
 
 
 .el-row {

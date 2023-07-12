@@ -46,7 +46,7 @@ onMounted(() => {
 })
 
 const addproductnum = () => {
-    // console.log(form.id, form.num) 
+    
     ElMessageBox.confirm(
     '确认补货吗',
     'Warning',

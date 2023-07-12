@@ -63,7 +63,7 @@ interface passwordformRule {
 
 
 const headerObj ={
-  Authorization: localStorage.getItem("token")
+  Authorization: localStorage.getItem("client_token")
 }
 
 const avatatUrl = ref('')
@@ -301,14 +301,14 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
             <el-button type="primary" @click="passwordclientform(passwordFormRef)">
               修改
             </el-button>
-            <!-- <el-button @click="resetForm(ruleFormRef)">重置</el-button> -->
+          
           </el-form-item>
         </el-form>
       </el-tab-pane>
 
       <el-tab-pane class="avatar" label="头像" name="third">
         <el-avatar :size="150" :src="avatatUrl" />
-        <!-- <el-button type="primary" @click="upload()">上传</el-button> -->
+        
         <el-upload   
         v-loading.lock="loading"
          ref="upload" action="http://localhost:9000/client-service/client/uploadAvatar" 
@@ -317,7 +317,7 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
          :on-progress="handleprogress"
          :on-error="handlerror"
          class="upload" 
-        :on-exceed="handleExceed" list-type="picture" limit=1 :auto-upload="false">
+        :on-exceed="handleExceed" list-type="picture" limit="1" :auto-upload="false">
           <el-icon>
             <Plus />
           </el-icon>
@@ -355,10 +355,7 @@ const passwordclientform = (formEl: FormInstance | undefined) => {
 
   margin-left: 20%;
 }
-.upload{
-  /* width: 100px;
-  height: 200px; */
-}
+ 
 .mynav{
   margin-top: 50px;
   margin-left: 150px;
