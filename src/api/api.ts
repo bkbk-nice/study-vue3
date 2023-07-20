@@ -14,7 +14,7 @@ export function newProduct(params:any) {
 }
 
 
-//商城首页动态获取商品信息
+//商城首页动态获取商品信息（14-8）
 export function getshophome(params:any) {
 
   return http.request({
@@ -201,7 +201,7 @@ export function signup_client(params:any) {
 
 
 
-//客服登录
+//客服登录（8）
 export function login_cs(params:any) {
 
   return http.request({
@@ -398,8 +398,7 @@ export function getdeliveryman() {
 
 
 
-//中心库房登录
-
+//中心库房登录（7）
 export function centerLogin(params: any) {
   return http.request({
     url: '/product-service/secure/login',
@@ -489,7 +488,7 @@ export function substationTaskListForCenter(params: any) {
 
 
 
-//分站登录
+//配送员登录（3）
 export function deliverymanLogin(params: any) {
 
   return http.request({
@@ -503,7 +502,7 @@ export function deliverymanLogin(params: any) {
 
 }
 
-//分站查询任务单
+//配送员查询任务单
 export function deliverymanTaskList(params: any) { 
   return http.request({ 
     url: '/deliveryman-service/deliveryman/listPageByDynamics',

@@ -48,8 +48,7 @@ class HttpRequest {
            // console.log('返回数据处理', res) 
             return data 
         }, (error: any) => { 
-            console.log('error==>', error) 
-            
+            console.log('error==>', error)             
             return Promise.reject(error) 
         }) 
     }

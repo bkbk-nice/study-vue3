@@ -155,7 +155,9 @@ const sureGet = () => {
   </el-breadcrumb>
 
 
-  <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
+  <ul v-infinite-scroll="load" 
+  class="infinite-list" style="overflow: auto"
+  infinite-scroll-distance="1" >
     <li v-show="i <= total || total == 0" v-for="i in count" :key="i" @click="getdetail(i)" class="infinite-list-item">
       <div v-if="total == 0">
         <el-empty description="没有订单" style="margin-top: -30px;" />
